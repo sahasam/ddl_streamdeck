@@ -1,0 +1,610 @@
+{
+	"Name": "Daedaelus Chiplet Demo",
+	"Version": "0.1.0.0",
+	"Author": "Casildo Romero",
+	"Actions": [
+		{
+			"Name": "Link Status",
+			"UUID": "com.casildo-romero.daedaelus-chiplet-demo.link-status",
+			"Icon": "imgs/actions/link-status/icon",
+			"Tooltip": "Used to monitor the health state of a node link status",
+			"SupportedInMultiActions": false,
+			"DisableAutomaticStates": true,
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/link-status/linked",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/link-status/connected",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/link-status/disconnected",
+					"TitleAlignment": "middle"
+				}
+			]
+		},
+		{
+			"Name": "Events",
+			"UUID": "com.casildo-romero.daedaelus-chiplet-demo.events",
+			"Icon": "imgs/actions/events/icon",
+			"Tooltip": "Used to monitor the health state of a node link events",
+			"SupportedInMultiActions": false,
+			"DisableAutomaticStates": true,
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/events/key",
+					"TitleAlignment": "middle"
+				}
+			]
+		},
+		{
+			"Name": "Round Trip Latency",
+			"UUID": "com.casildo-romero.daedaelus-chiplet-demo.round-trip-latency",
+			"Icon": "imgs/actions/round-trip-latency/icon",
+			"Tooltip": "Used to monitor the health state of a node link round trip latency",
+			"SupportedInMultiActions": false,
+			"DisableAutomaticStates": true,
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/round-trip-latency/initialized",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/0",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/25",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/50",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/75",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/100",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/125",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/150",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/175",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/200",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/225",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/250",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/275",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/300",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/325",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/350",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/375",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/400",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/425",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/450",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/475",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/500",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/525",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/550",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/575",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/600",
+					"TitleAlignment": "middle"
+				}
+			]
+		},
+		{
+			"Name": "Packets Per Second",
+			"UUID": "com.casildo-romero.daedaelus-chiplet-demo.packets-per-second",
+			"Icon": "imgs/actions/packets-per-second/icon",
+			"Tooltip": "Used to monitor the health state of a node link packets per second",
+			"SupportedInMultiActions": false,
+			"DisableAutomaticStates": true,
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/packets-per-second/initialized",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/packets-per-second/1",
+					"TitleAlignment": "top"
+				},
+				{
+					"Image": "imgs/actions/packets-per-second/2",
+					"TitleAlignment": "top"
+				},
+				{
+					"Image": "imgs/actions/packets-per-second/3",
+					"TitleAlignment": "top"
+				},
+				{
+					"Image": "imgs/actions/packets-per-second/4",
+					"TitleAlignment": "top"
+				},
+				{
+					"Image": "imgs/actions/packets-per-second/5",
+					"TitleAlignment": "top"
+				},
+				{
+					"Image": "imgs/actions/packets-per-second/6",
+					"TitleAlignment": "top"
+				},
+				{
+					"Image": "imgs/actions/packets-per-second/7",
+					"TitleAlignment": "top"
+				},
+				{
+					"Image": "imgs/actions/packets-per-second/8",
+					"TitleAlignment": "top"
+				},
+				{
+					"Image": "imgs/actions/packets-per-second/9",
+					"TitleAlignment": "top"
+				},
+				{
+					"Image": "imgs/actions/packets-per-second/10",
+					"TitleAlignment": "top"
+				},
+				{
+					"Image": "imgs/actions/packets-per-second/11",
+					"TitleAlignment": "top"
+				},
+				{
+					"Image": "imgs/actions/packets-per-second/12",
+					"TitleAlignment": "top"
+				},
+				{
+					"Image": "imgs/actions/packets-per-second/13",
+					"TitleAlignment": "top"
+				},
+				{
+					"Image": "imgs/actions/packets-per-second/14",
+					"TitleAlignment": "top"
+				},
+				{
+					"Image": "imgs/actions/packets-per-second/15",
+					"TitleAlignment": "top"
+				},
+				{
+					"Image": "imgs/actions/packets-per-second/16",
+					"TitleAlignment": "top"
+				},
+				{
+					"Image": "imgs/actions/packets-per-second/17",
+					"TitleAlignment": "top"
+				}
+			]
+		},
+		{
+			"Name": "Node - Root",
+			"UUID": "com.casildo-romero.daedaelus-chiplet-demo.node-root",
+			"Icon": "imgs/actions/nodes/icon",
+			"Tooltip": "Node tree",
+			"SupportedInMultiActions": false,
+			"DisableAutomaticStates": true,
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/nodes/action",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-root/1",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-root/2",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-root/3",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-root/4",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-root/5",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-root/6",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-root/7",
+					"TitleAlignment": "middle"
+				}
+			]
+		},
+		{
+			"Name": "Node - 1",
+			"UUID": "com.casildo-romero.daedaelus-chiplet-demo.node-1",
+			"Icon": "imgs/actions/nodes/icon",
+			"Tooltip": "Node tree",
+			"SupportedInMultiActions": false,
+			"DisableAutomaticStates": true,
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/nodes/action",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-1/1",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-1/2",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-1/3",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-1/4",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-1/5",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-1/6",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-1/7",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-1/8",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-1/9",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-1/10",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-1/11",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-1/12",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-1/13",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-1/14",
+					"TitleAlignment": "middle"
+				}
+			]
+		},
+		{
+			"Name": "Node - 2",
+			"UUID": "com.casildo-romero.daedaelus-chiplet-demo.node-2",
+			"Icon": "imgs/actions/nodes/icon",
+			"Tooltip": "Node tree",
+			"SupportedInMultiActions": false,
+			"DisableAutomaticStates": true,
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/nodes/action",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-2/1",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-2/2",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-2/3",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-2/4",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-2/5",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-2/6",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-2/7",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-2/8",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-2/9",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-2/10",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-2/11",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-2/12",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-2/13",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-2/14",
+					"TitleAlignment": "middle"
+				}
+			]
+		},
+		{
+			"Name": "Node - 3",
+			"UUID": "com.casildo-romero.daedaelus-chiplet-demo.node-3",
+			"Icon": "imgs/actions/nodes/icon",
+			"Tooltip": "Node tree",
+			"SupportedInMultiActions": false,
+			"DisableAutomaticStates": true,
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/nodes/action",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-3/1",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-3/2",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-3/3",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-3/4",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-3/5",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-3/6",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-3/7",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-3/8",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-3/9",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-3/10",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-3/11",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-3/12",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-3/13",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/nodes/node-3/14",
+					"TitleAlignment": "middle"
+				}
+			]
+		},
+		{
+			"Name": "Start Stop API",
+			"UUID": "com.casildo-romero.daedaelus-chiplet-demo.start-stop",
+			"Icon": "imgs/actions/start-stop/icon",
+			"Tooltip": "Starts and stops the node health monitoring",
+			"SupportedInMultiActions": false,
+			"DisableAutomaticStates": true,
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/start-stop/start",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/start-stop/stop",
+					"TitleAlignment": "middle"
+				}
+			]
+		},
+		{
+			"Name": "Counter",
+			"UUID": "com.casildo-romero.daedaelus-chiplet-demo.counter",
+			"Icon": "imgs/actions/counter/icon",
+			"Tooltip": "Counts the number of API calls",
+			"SupportedInMultiActions": false,
+			"DisableAutomaticStates": true,
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/counter/action",
+					"TitleAlignment": "middle"
+				}
+			]
+		},
+		{
+			"Name": "Logos",
+			"UUID": "com.casildo-romero.daedaelus-chiplet-demo.logos",
+			"Icon": "imgs/actions/logos/icon",
+			"Tooltip": "Daedaelus logo",
+			"SupportedInMultiActions": false,
+			"DisableAutomaticStates": true,
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/logos/dae",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/logos/lus",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/logos/ethernet_2025_logo",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/logos/ethernet",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/logos/2025",
+					"TitleAlignment": "middle"
+				}
+			]
+		}
+	],
+	"Category": "Daedaelus Chiplet Demo",
+	"CategoryIcon": "imgs/plugin/icon",
+	"CodePath": "bin/plugin.js",
+	"Description": "Monitor the health of node statistics on the Stream Deck",
+	"Icon": "imgs/plugin/marketplace",
+	"SDKVersion": 2,
+	"Software": {
+		"MinimumVersion": "6.4"
+	},
+	"OS": [
+		{
+			"Platform": "mac",
+			"MinimumVersion": "10.15"
+		},
+		{
+			"Platform": "windows",
+			"MinimumVersion": "10"
+		}
+	],
+	"Nodejs": {
+		"Version": "20",
+		"Debug": "enabled"
+	},
+	"UUID": "com.casildo-romero.daedaelus-chiplet-demo"
+}
