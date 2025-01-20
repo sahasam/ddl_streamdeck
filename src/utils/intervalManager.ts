@@ -3,6 +3,7 @@ import { sendRequestViaWebSocket, closeWebSocket } from "./apiService";
 import { updateKeyState, getKeyContext } from "./utils";
 
 let devEnv = "mac-mini"; // windows or mac-mini
+let streamDeckEnv = "stream-deck-xl";
 
 let intervalId: NodeJS.Timeout | null = null;
 
@@ -106,88 +107,92 @@ export const processJsonData = (json: any): void => {
   streamDeck.logger.info("snapshotData:", snapshotData);
   streamDeck.logger.info("treeData:", treeData);
 
-  snapshotData.forEach((entry, columnIndex) => {
-    const { link } = entry;
+  if (streamDeckEnv == "stream-deck-xl") {
 
-    if (link) {
-      const { status, statistics } = link;
+    snapshotData.forEach((entry, columnIndex) => {
+      const { link } = entry;
 
-      // Update state for link status (keyIndex=0)
-      const statusContext = getKeyContext(columnIndex, 0); // KeyIndex 0 for link.status
-      streamDeck.logger.info(`Key state, columnIndex: ${columnIndex}, keyIndex: 0`);
-      if (statusContext) {
-        const stateIndex = mapLinkStatusToState(status);
-        streamDeck.logger.info(`link.status: ${status}, link.state: ${stateIndex}`);
+      if (link) {
+        const { status, statistics } = link;
 
-        updateKeyState(statusContext, "", stateIndex);
-      }
+        // Update state for link status (keyIndex=0)
+        const statusContext = getKeyContext(columnIndex, 0); // KeyIndex 0 for link.status
+        streamDeck.logger.info(`Key state, columnIndex: ${columnIndex}, keyIndex: 0`);
+        if (statusContext) {
+          const stateIndex = mapLinkStatusToState(status);
+          streamDeck.logger.info(`link.status: ${status}, link.state: ${stateIndex}`);
 
-      // Update states dynamically for events, round_trip_latency, and pps
-      let keyMappings = [];
-
-      if (status === "connected" && statistics) {
-
-        // Map metrics to state indices
-        //const eventStateIndex = mapValueToStateIndex(statistics.events, eventMapping);
-        const latencyStateIndex = mapValueToStateIndex(statistics.round_trip_latency, latencyMapping);
-        const ppsStateIndex = mapValueToStateIndex(statistics.pps, ppsMapping);
+          updateKeyState(statusContext, "", stateIndex);
+        }
 
         // Update states dynamically for events, round_trip_latency, and pps
-        keyMappings = [
-          { keyIndex: 1, value: statistics.events, stateIndex: 0 },       // KeyIndex 1 for events
-          { keyIndex: 2, value: statistics.round_trip_latency, stateIndex: latencyStateIndex },    // KeyIndex 2 for round_trip_latency
-          { keyIndex: 3, value: statistics.pps, stateIndex: ppsStateIndex }         // KeyIndex 3 for pps
-        ];
+        let keyMappings = [];
 
-      } else { // Initialized or Disconnected
+        if (status === "connected" && statistics) {
 
-        // Initialize states dynamically for events, round_trip_latency, and pps
-        keyMappings = [
-          { keyIndex: 1, value: "", stateIndex: 0 },       // KeyIndex 1 for events
-          { keyIndex: 2, value: "", stateIndex: 0 },    // KeyIndex 2 for round_trip_latency
-          { keyIndex: 3, value: "", stateIndex: 0 }         // KeyIndex 3 for pps
-        ];
+          // Map metrics to state indices
+          //const eventStateIndex = mapValueToStateIndex(statistics.events, eventMapping);
+          const latencyStateIndex = mapValueToStateIndex(statistics.round_trip_latency, latencyMapping);
+          const ppsStateIndex = mapValueToStateIndex(statistics.pps, ppsMapping);
 
-      }
+          // Update states dynamically for events, round_trip_latency, and pps
+          keyMappings = [
+            { keyIndex: 1, value: statistics.events, stateIndex: 0 },       // KeyIndex 1 for events
+            { keyIndex: 2, value: statistics.round_trip_latency, stateIndex: latencyStateIndex },    // KeyIndex 2 for round_trip_latency
+            { keyIndex: 3, value: statistics.pps, stateIndex: ppsStateIndex }         // KeyIndex 3 for pps
+          ];
+
+        } else { // Initialized or Disconnected
+
+          // Initialize states dynamically for events, round_trip_latency, and pps
+          keyMappings = [
+            { keyIndex: 1, value: "", stateIndex: 0 },       // KeyIndex 1 for events
+            { keyIndex: 2, value: "", stateIndex: 0 },    // KeyIndex 2 for round_trip_latency
+            { keyIndex: 3, value: "", stateIndex: 0 }         // KeyIndex 3 for pps
+          ];
+
+        }
 
 
-      // For latency and pps
-      keyMappings.forEach(({ keyIndex, value, stateIndex }) => {
-        const context = getKeyContext(columnIndex, keyIndex);
-        streamDeck.logger.info(`Context - columnIndex: ${columnIndex}, keyIndex: ${keyIndex}`);
-        if (context) {
-          if (keyIndex === 1) {
-            for (const action of streamDeck.actions) {
-              if (!action.isKey() || action.isInMultiAction()) {
-                continue;
+        // For latency and pps
+        keyMappings.forEach(({ keyIndex, value, stateIndex }) => {
+          const context = getKeyContext(columnIndex, keyIndex);
+          streamDeck.logger.info(`Context - columnIndex: ${columnIndex}, keyIndex: ${keyIndex}`);
+          if (context) {
+            if (keyIndex === 1) {
+              for (const action of streamDeck.actions) {
+                if (!action.isKey() || action.isInMultiAction()) {
+                  continue;
+                }
+
+                if (action.id == context) {
+                  if (value) {
+                    action.setTitle(value.toString());
+                    break;
+                  } else {
+                    action.setTitle("");
+                  }
+                }
               }
-
-              if (action.id == context) {
-                //if(status === "connected" && statistics){
-                action.setTitle(value.toString());
-                //}
-                break;
-              } else {
-                action.setTitle("");
-              }
-            }
-          } else if (keyIndex === 2) {
-            updateKeyState(context, "", stateIndex);
-          } else if (keyIndex === 3) {
-            if (Number(value) > 0) {
-              var pps = Number(value).toLocaleString('en-US', {
-                maximumFractionDigits: 0
-              });
-              updateKeyState(context, pps.toString(), stateIndex);
-            } else {
+            } else if (keyIndex === 2) {
               updateKeyState(context, "", stateIndex);
+            } else if (keyIndex === 3) {
+              if (Number(value) > 0) {
+                var pps = Number(value).toLocaleString('en-US', {
+                  maximumFractionDigits: 0
+                });
+                updateKeyState(context, pps.toString(), stateIndex);
+              } else {
+                updateKeyState(context, "", stateIndex);
+              }
             }
           }
-        }
-      });
-      processTreeData(treeData);
-    }
-  });
+        });
+      }
+    });//close snapshots loop
+  }//close the check for streamddeck env
+
+  processTreeData(treeData);
 };
 
 // Helper to map link.status to Stream Deck states
