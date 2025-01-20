@@ -326,22 +326,25 @@ const processTreeData = (tree: TreeData): void => {
     }
 
     // Update Stream Deck
-    if (positions[nodeIndex]) {
-      const [col, row] = positions[nodeIndex];
-      const nodeContext = getKeyContext(col, row);
-      if (nodeContext) {
-        updateKeyState(nodeContext, nodes[nodeIndex].charAt(0).toUpperCase(), nodeState);
-        streamDeck.logger.info(`Updated node ${nodes[nodeIndex]} (index ${nodeIndex}) to state ${nodeState}`);
-      }
-    }
 
-    // Update Mini Stream Deck
-    if (sdMiniPositions[nodeIndex]) {
-      const [col, row] = sdMiniPositions[nodeIndex];
-      const nodeContext = getKeyContext(col, row);
-      if (nodeContext) {
-        updateKeyState(nodeContext, nodes[nodeIndex].charAt(0).toUpperCase(), nodeState);
-        streamDeck.logger.info(`Updated node ${nodes[nodeIndex]} (index ${nodeIndex}) to state ${nodeState}`);
+    if (streamDeckEnv == "stream-deck-xl") {
+      if (positions[nodeIndex]) {
+        const [col, row] = positions[nodeIndex];
+        const nodeContext = getKeyContext(col, row);
+        if (nodeContext) {
+          updateKeyState(nodeContext, nodes[nodeIndex].charAt(0).toUpperCase(), nodeState);
+          streamDeck.logger.info(`Updated node ${nodes[nodeIndex]} (index ${nodeIndex}) to state ${nodeState}`);
+        }
+      }
+    } else {
+      // Update Mini Stream Deck
+      if (sdMiniPositions[nodeIndex]) {
+        const [col, row] = sdMiniPositions[nodeIndex];
+        const nodeContext = getKeyContext(col, row);
+        if (nodeContext) {
+          updateKeyState(nodeContext, nodes[nodeIndex].charAt(0).toUpperCase(), nodeState);
+          streamDeck.logger.info(`Updated node ${nodes[nodeIndex]} (index ${nodeIndex}) to state ${nodeState}`);
+        }
       }
     }
 
