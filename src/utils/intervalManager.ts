@@ -36,26 +36,34 @@ const latencyMapping: { range: [number, number], index: number }[] = [
   { range: [51.251, 53.75], index: 22 },
   { range: [53.751, 56.25], index: 23 },
   { range: [56.251, 58.75], index: 24 },
-  { range: [58.751, 100.00], index: 25 }
+  { range: [58.751, 61.25], index: 25 },
+  { range: [61.251, 63.75], index: 26 },
+  { range: [63.751, 66.25], index: 27 },
+  { range: [66.251, 68.75], index: 28 },
+  { range: [68.751, 71.25], index: 29 },
+  { range: [71.251, 73.75], index: 30 },
+  { range: [73.751, 76.25], index: 31 },
+  { range: [76.251, 78.75], index: 32 },
+  { range: [78.751, 100.00], index: 33 }
 ];
 const ppsMapping: { range: [number, number], index: number }[] = [
-  { range: [0, 15000], index: 1 },
-  { range: [15000.001, 16000], index: 2 },
-  { range: [16000.001, 17000], index: 3 },
-  { range: [17000.01, 18000], index: 4 },
-  { range: [18000.01, 19000], index: 5 },
-  { range: [19000.01, 20000], index: 6 },
-  { range: [20000.01, 21000], index: 7 },
-  { range: [21000.01, 22000], index: 8 },
-  { range: [22000.01, 23000], index: 9 },
-  { range: [23000.01, 24000], index: 10 },
-  { range: [24000.01, 25000], index: 11 },
-  { range: [25000.01, 26000], index: 12 },
-  { range: [26000.01, 27000], index: 13 },
-  { range: [27000.01, 28000], index: 14 },
-  { range: [38000.01, 29000], index: 15 },
-  { range: [29000.01, 30000], index: 16 },
-  { range: [30000.01, 100000], index: 17 }
+  { range: [0, 5000], index: 1 },
+  { range: [5000.01, 6000], index: 2 },
+  { range: [6000.01, 7000], index: 3 },
+  { range: [7000.01, 8000], index: 4 },
+  { range: [8000.01, 9000], index: 5 },
+  { range: [9000.01, 10000], index: 6 },
+  { range: [10000.01, 11000], index: 7 },
+  { range: [11000.01, 12000], index: 8 },
+  { range: [12000.01, 13000], index: 9 },
+  { range: [13000.01, 14000], index: 10 },
+  { range: [14000.01, 15000], index: 11 },
+  { range: [15000.01, 16000], index: 12 },
+  { range: [16000.01, 17000], index: 13 },
+  { range: [17000.01, 18000], index: 14 },
+  { range: [18000.01, 19000], index: 15 },
+  { range: [19000.01, 20000], index: 16 },
+  { range: [20000.01, 50000], index: 17 }
 ];
 let numberFormat = new Intl.NumberFormat('en-US');
 
@@ -106,7 +114,7 @@ export const processJsonData = (json: any): void => {
 
       // Update state for link status (keyIndex=0)
       const statusContext = getKeyContext(columnIndex, 0); // KeyIndex 0 for link.status
-      streamDeck.logger.info(`Updated key state, columnIndex: ${columnIndex}, keyIndex: 0`);
+      streamDeck.logger.info(`Key state, columnIndex: ${columnIndex}, keyIndex: 0`);
       if (statusContext) {
         const stateIndex = mapLinkStatusToState(status);
         streamDeck.logger.info(`link.status: ${status}, link.state: ${stateIndex}`);
@@ -126,7 +134,7 @@ export const processJsonData = (json: any): void => {
 
         // Update states dynamically for events, round_trip_latency, and pps
         keyMappings = [
-          //{ keyIndex: 1, value: statistics.events, stateIndex: eventStateIndex },       // KeyIndex 1 for events
+          { keyIndex: 1, value: statistics.events, stateIndex: 0 },       // KeyIndex 1 for events
           { keyIndex: 2, value: statistics.round_trip_latency, stateIndex: latencyStateIndex },    // KeyIndex 2 for round_trip_latency
           { keyIndex: 3, value: statistics.pps, stateIndex: ppsStateIndex }         // KeyIndex 3 for pps
         ];
@@ -135,61 +143,52 @@ export const processJsonData = (json: any): void => {
 
         // Initialize states dynamically for events, round_trip_latency, and pps
         keyMappings = [
-          //{ keyIndex: 1, value: 0, stateIndex: 0 },       // KeyIndex 1 for events
+          { keyIndex: 1, value: "", stateIndex: 0 },       // KeyIndex 1 for events
           { keyIndex: 2, value: "", stateIndex: 0 },    // KeyIndex 2 for round_trip_latency
           { keyIndex: 3, value: "", stateIndex: 0 }         // KeyIndex 3 for pps
         ];
 
       }
 
-      // For events only
-      const eventContext = getKeyContext(columnIndex, 1);// KeyIndex 1 for events
-      if (eventContext) {
-        for (const action of streamDeck.actions) {
-          if (!action.isKey() || action.isInMultiAction()) {
-            continue;
-          }
-
-          if (action.id == eventContext) {
-            if (status === "connected" && statistics) {
-              action.setTitle(statistics.events.toString());
-            } else {
-              action.setTitle("");
-            }
-            break;
-          }
-        }
-      }
 
       // For latency and pps
       keyMappings.forEach(({ keyIndex, value, stateIndex }) => {
         const context = getKeyContext(columnIndex, keyIndex);
-        streamDeck.logger.info(`Updated key state, columnIndex: ${columnIndex}, keyIndex: ${keyIndex}`);
+        streamDeck.logger.info(`Context - columnIndex: ${columnIndex}, keyIndex: ${keyIndex}`);
         if (context) {
-          if (status === "connected" && statistics) {
-            if (keyIndex === 2) {
-              updateKeyState(context, "", stateIndex);
-            } else if (keyIndex === 3) {
-              var pps = Number(statistics.pps).toLocaleString('en-US', {
+          if (keyIndex === 1) {
+            for (const action of streamDeck.actions) {
+              if (!action.isKey() || action.isInMultiAction()) {
+                continue;
+              }
+
+              if (action.id == context) {
+                //if(status === "connected" && statistics){
+                action.setTitle(value.toString());
+                //}
+                break;
+              } else {
+                action.setTitle("");
+              }
+            }
+          } else if (keyIndex === 2) {
+            updateKeyState(context, "", stateIndex);
+          } else if (keyIndex === 3) {
+            if (Number(value) > 0) {
+              var pps = Number(value).toLocaleString('en-US', {
                 maximumFractionDigits: 0
               });
               updateKeyState(context, pps.toString(), stateIndex);
             } else {
-              updateKeyState(context, value, stateIndex);
+              updateKeyState(context, "", stateIndex);
             }
-          } else {
-            updateKeyState(context, "", stateIndex);
           }
         }
       });
+      processTreeData(treeData);
     }
-
   });
-
-  processTreeData(treeData);
-
 };
-
 
 // Helper to map link.status to Stream Deck states
 const mapLinkStatusToState = (status: string): number => {
@@ -200,6 +199,7 @@ const mapLinkStatusToState = (status: string): number => {
     default: return 0; // Default to linked
   }
 };
+
 
 // Helper to map a value to a state index using a range-to-index mapping
 const mapValueToStateIndex = (value: number, rangeToIndexMap: { range: [number, number], index: number }[]): number => {
@@ -244,13 +244,12 @@ const processTreeData = (tree: TreeData): void => {
   if (rootContext) {
     updateKeyState(rootContext, nodes[0].charAt(0).toUpperCase(), rootState);
   }
+
   // Update Mini Stream Deck for root node
-  /*
   const sdMiniRootContext = getKeyContext(sdMiniPositions[0][0], sdMiniPositions[0][1]);
   if (sdMiniRootContext) {
     updateKeyState(sdMiniRootContext, nodes[0].charAt(0).toUpperCase(), rootState);
   }
-  */
 
   // Process remaining nodes (1, 2, 3)
   for (let nodeIndex = 1; nodeIndex < nodes.length; nodeIndex++) {
@@ -332,7 +331,6 @@ const processTreeData = (tree: TreeData): void => {
     }
 
     // Update Mini Stream Deck
-    /*
     if (sdMiniPositions[nodeIndex]) {
       const [col, row] = sdMiniPositions[nodeIndex];
       const nodeContext = getKeyContext(col, row);
@@ -341,6 +339,6 @@ const processTreeData = (tree: TreeData): void => {
         streamDeck.logger.info(`Updated node ${nodes[nodeIndex]} (index ${nodeIndex}) to state ${nodeState}`);
       }
     }
-      */
+
   }
 };

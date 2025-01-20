@@ -73,16 +73,26 @@ export const closeWebSocket = (): void => {
 };
 
 // Send a request via the WebSocket connection
-export const dropLink = (): void => {
+export const dropLink = (columnIndex: number): void => {
     streamDeck.logger.info("DROPPING LINK");
 
     if (!websocket) {
         initializeWebSocket();
     }
+    var portName;
+    if(columnIndex === 0){
+        portName = "alice";
+    }else if(columnIndex === 1){
+        portName = "bob";
+    }else if(columnIndex === 2){
+        portName = "charlie";
+    }else if(columnIndex === 3){
+        portName = "dugen";
+    }
     if (websocket?.readyState === WebSocket.OPEN) {
         //websocket.send(message);
         const payload = JSON.stringify({
-            "port": "alice",
+            "port": portName,
             "action": "DROP"
         });
         websocket.send(payload);

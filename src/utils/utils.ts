@@ -10,9 +10,13 @@ export const updateKeyState = (context: string, value: any, stateIndex: number):
       continue;
     }
     if (action.id == context) {
-      action.setState(stateIndex);
-      action.setTitle(value.toString());
-      streamDeck.logger.info(`Updated key state, context: ${context}, state: ${stateIndex}`);
+      if (stateIndex) {
+        action.setState(stateIndex);
+      }
+      if (value) {
+        action.setTitle(value.toString());
+      }
+      streamDeck.logger.info(`utils - Key State, context: ${context}, state: ${stateIndex}`);
       break;
     }
   }

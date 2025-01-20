@@ -28,8 +28,10 @@ export class LinkStatus extends SingletonAction {
 
 	override async onKeyDown(ev: KeyDownEvent): Promise<void> {
 		const context = ev.action.id;
+		const columnIndex = ev.action.coordinates?.column ?? 0; // Use optional chaining and fallback
+		const rowIndex = ev.action.coordinates?.row ?? 0; // a.k.a keyIndex
 
-		dropLink();
+		dropLink(columnIndex);
 	}
 
 	// Method to update the state for this key

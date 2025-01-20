@@ -159,6 +159,38 @@
 				{
 					"Image": "imgs/actions/round-trip-latency/600",
 					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/625",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/650",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/675",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/700",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/725",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/750",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/775",
+					"TitleAlignment": "middle"
+				},
+				{
+					"Image": "imgs/actions/round-trip-latency/800",
+					"TitleAlignment": "middle"
 				}
 			]
 		},
