@@ -2,7 +2,7 @@ import streamDeck from "@elgato/streamdeck";
 import { sendRequestViaWebSocket, closeWebSocket } from "./apiService";
 import { updateKeyState, getKeyContext } from "./utils";
 
-let devEnv = "mac-mini"; // windows or mac-mini
+let devEnv = "windows"; // windows or mac-mini
 let streamDeckEnv = "stream-deck-xl";
 
 let intervalId: NodeJS.Timeout | null = null;
@@ -75,7 +75,7 @@ export const startFetching = (): void => {
       if (devEnv === "windows") {
         sendRequestViaWebSocket("request_health_data"); // for Casildo ws
       }
-    }, 1500); // Send a request every 1 seconds
+    }, 1000); // Send a request every 1 seconds
     if (devEnv === "mac-mini") {
       sendRequestViaWebSocket("request_health_data");// for Sahas ws
     }
@@ -117,10 +117,10 @@ export const processJsonData = (json: any): void => {
 
         // Update state for link status (keyIndex=0)
         const statusContext = getKeyContext(columnIndex, 0); // KeyIndex 0 for link.status
-        streamDeck.logger.info(`Key state, columnIndex: ${columnIndex}, keyIndex: 0`);
+        streamDeck.logger.info(`===========Key state, columnIndex: ${columnIndex}, keyIndex: 0==============`);
         if (statusContext) {
           const stateIndex = mapLinkStatusToState(status);
-          streamDeck.logger.info(`link.status: ${status}, link.state: ${stateIndex}`);
+          streamDeck.logger.info(`link.status=${status}, link.state=${stateIndex}`);
 
           updateKeyState(statusContext, "", stateIndex);
         }
@@ -157,7 +157,7 @@ export const processJsonData = (json: any): void => {
         // For latency and pps
         keyMappings.forEach(({ keyIndex, value, stateIndex }) => {
           const context = getKeyContext(columnIndex, keyIndex);
-          streamDeck.logger.info(`Context - columnIndex: ${columnIndex}, keyIndex: ${keyIndex}`);
+          streamDeck.logger.info(`Context - columnIndex=${columnIndex}, keyIndex=${keyIndex}, stateIndex=${stateIndex}`);
           if (context) {
             if (keyIndex === 1) {
               for (const action of streamDeck.actions) {
@@ -233,7 +233,7 @@ const sdMiniPositions: Record<number, [number, number]> = {
 
 const processTreeData = (tree: TreeData): void => {
   const { nodes, edges } = tree;
-  streamDeck.logger.info(`Processing tree data: nodes = ${JSON.stringify(nodes)}, edges = ${JSON.stringify(edges)}`);
+  streamDeck.logger.info(`-----------Tree Data: nodes=${JSON.stringify(nodes)}, edges=${JSON.stringify(edges)}----------------------`);
 
   // Initialize root node (node 0)
   let rootState = 0;
@@ -261,8 +261,8 @@ const processTreeData = (tree: TreeData): void => {
     const sourceEdges = edges.filter(edge => edge[0] === nodeIndex).map(edge => edge[1]);
     const destinationEdges = edges.filter(edge => edge[1] === nodeIndex).map(edge => edge[0]);
 
-    streamDeck.logger.info(`sourceEdges ${sourceEdges}`);
-    streamDeck.logger.info(`destinationEdges ${destinationEdges}`);
+    streamDeck.logger.info(`sourceEdges=${sourceEdges.length}`);
+    streamDeck.logger.info(`destinationEdges=${destinationEdges.length}`);
 
     // State calculation: lower states for simpler cases, higher for more complex
     let nodeState = 0;
@@ -333,7 +333,7 @@ const processTreeData = (tree: TreeData): void => {
         const nodeContext = getKeyContext(col, row);
         if (nodeContext) {
           updateKeyState(nodeContext, nodes[nodeIndex].charAt(0).toUpperCase(), nodeState);
-          streamDeck.logger.info(`Updated node ${nodes[nodeIndex]} (index ${nodeIndex}) to state ${nodeState}`);
+          streamDeck.logger.info(`    Updated node ${nodes[nodeIndex]} (index ${nodeIndex}) state=${nodeState}`);
         }
       }
     } else {
