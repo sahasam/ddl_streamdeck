@@ -2,7 +2,7 @@ import streamDeck from "@elgato/streamdeck";
 import { sendRequestViaWebSocket, closeWebSocket } from "./apiService";
 import { updateKeyState, getKeyContext } from "./utils";
 
-let devEnv = "windows"; // windows or mac-mini
+let devEnv = "mac-mini"; // windows or mac-mini
 let streamDeckEnv = "stream-deck-xl";
 
 let intervalId: NodeJS.Timeout | null = null;
