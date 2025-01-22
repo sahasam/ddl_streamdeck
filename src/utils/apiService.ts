@@ -6,7 +6,7 @@ import { counter } from "../plugin"; // Ensure the Counter instance is accessibl
 
 const httpServerURL = "http://localhost/daedaelus/NodeHealthHttpServer/node_health_http_server.php";
 //const wsServerURL = "ws://127.0.0.1:9000"; // Casildo WS
-const wsServerURL = "ws://10.0.1.5:6363"; // Sahas WS
+const wsServerURL = "ws://127.0.0.1:6363"; // Sahas WS
 
 interface NodeSnapshotData {
     snapshots: any[]; // Replace `any` with a more specific type if you know the structure of a node.

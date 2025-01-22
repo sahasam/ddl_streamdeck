@@ -246,13 +246,12 @@ const processTreeData = (tree: TreeData): void => {
 
   // Update Stream Deck for root node
   const rootContext = getKeyContext(positions[0][0], positions[0][1]);
-  if (rootContext) {
-    updateKeyState(rootContext, nodes[0].charAt(0).toUpperCase(), rootState);
-  }
-
   // Update Mini Stream Deck for root node
   const sdMiniRootContext = getKeyContext(sdMiniPositions[0][0], sdMiniPositions[0][1]);
-  if (sdMiniRootContext) {
+
+  if (rootContext && streamDeckEnv === "stream-deck-xl") {
+    updateKeyState(rootContext, nodes[0].charAt(0).toUpperCase(), rootState);
+  } else if (sdMiniRootContext && streamDeckEnv !== "stream-deck-xl") {
     updateKeyState(sdMiniRootContext, nodes[0].charAt(0).toUpperCase(), rootState);
   }
 
